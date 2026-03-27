@@ -2,162 +2,227 @@ import { Shield, Brain, FileText, CheckCircle, Database, Lock, ArrowRight, Menu,
 import { useState } from 'react';
 import barclaysBuilding from  '../../assets/a99940d037be85e8b7a7c4d577116225b365d6e0.png';
 import barclaysLogo from '../../assets/8aaed975500a30811cee81ad6dd27c38362b1e50.png';
+import MovingStarsBackground from "./MovingStars";
 interface LandingPageProps {
   onSignIn: () => void;
   onGetStarted: () => void;
 }
 
+declare global {
+  interface Window {
+    FinisherHeader: any;
+  }
+}
+
 export function LandingPage({ onSignIn, onGetStarted }: LandingPageProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  
 
   return (
     <div className="min-h-screen bg-[#292b3d] overflow-x-hidden">
       {/* Hero Section with Extended Background - Barclays Style */}
-      <section className="bg-[#161b2f] relative overflow-hidden">
-        <div className="relative h-[500px] sm:h-[600px] lg:h-[672px] w-full">
-          {/* Background Image - Extended to top */}
-          <div className="absolute inset-0">
-            <img 
-              src={barclaysBuilding} 
-              alt="Barclays"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40 sm:from-black/70 sm:via-black/50 sm:to-transparent"></div>
-          </div>
+       {/* Hero Section */}
+<section className="relative overflow-hidden text-white h-screen">
 
-          {/* Navbar Overlay - Transparent */}
-          <nav className="relative z-40">
-            <div className="max-w-[1400px] mx-auto px-4 sm:px-6 relative z-10">
-              {/* Top Row - Logo and Buttons */}
-              <div className="h-[60px] sm:h-[72px] flex items-center justify-between">
-                {/* Barclays Logo */}
-                <div className="flex items-center">
-                  <img 
-                    src={barclaysLogo} 
-                    alt="Barclays"
-                    className="h-[36px] sm:h-[48px] lg:h-[56px] w-auto"
-                  />
-                </div>
+  {/* 🌌 Stars Background */}
+  <MovingStarsBackground />
 
-                {/* Right Side - Buttons */}
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <button
-                    className="px-4 sm:px-6 h-[36px] sm:h-[38px] bg-[#00D4FF] hover:bg-[#00B8E6] text-[#1a1a1a] text-[13px] sm:text-[14px] rounded-full transition-all"
-                    style={{ fontFamily: "'Arial', sans-serif", fontWeight: 600 }}
-                  >
-                    Contact Us
-                  </button>
-                  <button className="w-[36px] sm:w-[38px] h-[36px] sm:h-[38px] flex items-center justify-center text-[#00D4FF] hover:text-white transition-colors">
-                    <Search className="w-4 h-4 sm:w-5 sm:h-5" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </nav>
+  {/* ✅ SAME OVERLAY AS FEATURES SECTION */}
+  <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80 z-[1]" />
 
-          {/* Content Overlay */}
-          <div className="relative max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12 h-full flex items-center">
-            <div className="max-w-[700px]">
-              <div className="text-[11px] sm:text-[13px] text-[#00D4FF] mb-4 sm:mb-6 tracking-widest" style={{ fontFamily: "'Arial', sans-serif", fontWeight: 600, letterSpacing: '2px' }}>
-                BARCLAYS COMPLIANCE
-              </div>
-              
-              <h1 className="text-[32px] sm:text-[48px] lg:text-[64px] text-white mb-6 sm:mb-8 leading-tight" style={{ fontFamily: "'Georgia', serif", fontWeight: 400 }}>
-                Intelligent Compliance.<br />Superior Results.
-              </h1>
-              
-              <p className="text-[14px] sm:text-[16px] lg:text-[17px] text-white/90 mb-8 sm:mb-12 leading-relaxed" style={{ fontFamily: "'Arial', sans-serif", fontWeight: 400 }}>
-                Every day, we harness the power of AI to transform suspicious activity reporting. Our sole focus is delivering excellence by combining advanced machine learning, regulatory expertise, and complete transparency to help compliance teams detect financial crime and drive superior outcomes.
-              </p>
+  {/* 🔝 Navbar */}
+  <nav className="relative z-20 max-w-[1400px] mx-auto px-6 flex items-center justify-between h-[72px]">
 
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
-                <button
-                  onClick={onGetStarted}
-                  className="px-8 sm:px-10 h-[48px] sm:h-[52px] bg-[#00D4FF] hover:bg-[#00B8E6] text-[#1a1a1a] text-[14px] sm:text-[15px] rounded-full transition-all shadow-lg"
-                  style={{ fontFamily: "'Arial', sans-serif", fontWeight: 600 }}
-                >
-                  Get Started
-                </button>
-                <button
-                  onClick={onSignIn}
-                  className="px-8 sm:px-10 h-[48px] sm:h-[52px] bg-transparent hover:bg-white/10 text-white text-[14px] sm:text-[15px] rounded-full transition-all border-2 border-white"
-                  style={{ fontFamily: "'Arial', sans-serif", fontWeight: 600 }}
-                >
-                  Sign In
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+    {/* Logo */}
+    <div className="flex items-center gap-3">
+      <div className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center bg-white/10 backdrop-blur-md">
+        <span className="text-white font-bold text-sm">N</span>
+      </div>
 
+      <h1 className="text-white text-[22px] font-bold tracking-wide">
+        Norn AI
+      </h1>
+    </div>
+
+    {/* Right */}
+    <div className="flex items-center gap-4">
+      <button className="px-6 h-[40px] rounded-full border border-white/20 
+        bg-white/10 backdrop-blur-md hover:bg-white/20 transition text-[14px] font-medium text-white">
+        Contact
+      </button>
+
+      <button className="w-[40px] h-[40px] flex items-center justify-center 
+        border border-white/20 rounded-full bg-white/10 backdrop-blur-md 
+        hover:bg-white/20 transition">
+        <Search className="w-5 h-5 text-white" />
+      </button>
+    </div>
+
+  </nav>
+
+
+  {/* 🚀 HERO */}
+  <div className="absolute inset-0 z-10 flex items-center justify-center">
+
+    {/* Slightly DOWN */}
+    <div className="text-center max-w-[900px] px-6 transform -translate-y-[2%]">
+
+      {/* Tagline */}
+      <div className="mb-6 inline-block px-4 py-1 rounded-full border border-white/20 bg-white/10 backdrop-blur-md">
+        <p className="text-[12px] tracking-[0.25em] uppercase text-white/70 font-medium">
+          AI COMPLIANCE PLATFORM
+        </p>
+      </div>
+
+      {/* Heading */}
+      <h1 className="text-[44px] sm:text-[60px] lg:text-[72px] font-bold leading-tight mb-6 text-white">
+        Intelligent Compliance <br />
+        in Real-Time
+      </h1>
+
+      {/* Subtitle */}
+      <p className="text-[18px] sm:text-[20px] text-white/80 mb-10 leading-relaxed">
+        Enterprise-grade AI platform designed for compliance teams at global
+        financial institutions. Detect suspicious activity, automate workflows,
+        and generate SAR reports faster.
+      </p>
+
+      {/* Buttons */}
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
+
+        <button
+          onClick={onGetStarted}
+          className="px-12 h-[56px] rounded-full text-[16px] font-semibold
+          bg-white text-black hover:bg-white/90 transition">
+          Get Started
+        </button>
+
+        <button
+          onClick={onSignIn}
+          className="px-12 h-[56px] rounded-full text-[16px] font-medium
+          border border-white/20 bg-white/10 backdrop-blur-md
+          hover:bg-white/20 transition text-white">
+          Sign In
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+</section>
       {/* Core Features Section - Barclays Dark Card Style */}
-      <section className="py-12 sm:py-16 lg:py-24 bg-[#292b3d]">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
-          <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-[28px] sm:text-[36px] lg:text-[42px] text-white mb-3 sm:mb-4" style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: 600 }}>
-              Core Features
-            </h2>
-            <p className="text-[15px] sm:text-[16px] lg:text-[18px] text-[#94a3b8] max-w-[700px] mx-auto px-4" style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: 300 }}>
-              Enterprise-grade capabilities designed for compliance teams at global financial institutions
+    <section className="relative overflow-hidden py-12 sm:py-16 lg:py-24">
+
+  {/* 🌌 Stars Background */}
+  <MovingStarsBackground />
+
+  {/* 🌑 Dark overlay for readability */}
+  <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80 z-[1]" />
+
+  <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6">
+    
+    {/* Heading */}
+    <div className="text-center mb-10 sm:mb-16">
+      <h2
+        className="text-[28px] sm:text-[36px] lg:text-[42px] text-white mb-3 sm:mb-4"
+        style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: 600 }}
+      >
+        Core Features
+      </h2>
+
+      <p
+        className="text-[15px] sm:text-[16px] lg:text-[18px] text-white/70 max-w-[700px] mx-auto px-4"
+        style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: 300 }}
+      >
+        Enterprise-grade capabilities designed for compliance teams at global financial institutions
+      </p>
+    </div>
+
+    {/* Cards */}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+      {[
+        {
+          title: 'ML-Based SAR Worthiness & Typology Classification',
+          description: 'Advanced machine learning algorithms classify suspicious activity and identify money laundering patterns with precision',
+          image: 'https://images.unsplash.com/photo-1717501219687-ddce079f704b?...'
+        },
+        {
+          title: 'Agentic Workflow & Orchestration',
+          description: 'Intelligent multi-step processing with automated validation, enrichment, and orchestration at each stage',
+          image: 'https://images.unsplash.com/photo-1759752393975-7ca7b302fcc6?...'
+        },
+        {
+          title: 'Structured SAR Narrative Generation',
+          description: 'Regulator-ready reports following FinCEN guidelines with complete audit trail and version control',
+          image: 'https://images.unsplash.com/photo-1762846700374-f4aeb2f38e92?...'
+        },
+        {
+          title: 'Explainability & Reasoning Trace',
+          description: 'Complete transparency with line-by-line explanations, confidence indicators, and source traceability',
+          image: 'https://images.unsplash.com/photo-1740908900846-4bbd4f22c975?...'
+        },
+        {
+          title: 'Compliance Validation Engine',
+          description: 'Automated checks against BSA, FinCEN, and FATF regulatory requirements with real-time validation',
+          image: 'https://images.unsplash.com/photo-1704969724221-8b7361b61f75?...'
+        },
+        {
+          title: 'Full Audit Logging',
+          description: 'Complete traceability of all actions, decisions, and modifications for regulatory review and compliance',
+          image: 'https://images.unsplash.com/photo-1675627453084-505806a00406?...'
+        }
+      ].map((feature, idx) => (
+        <div
+          key={idx}
+          className="
+            relative
+            bg-white/5 backdrop-blur-md
+            border border-white/10
+            rounded-2xl overflow-hidden
+            transition-all duration-300
+            hover:scale-[1.03]
+            hover:border-white/30
+            hover:shadow-[0_0_25px_rgba(255,255,255,0.15)]
+            group cursor-pointer
+          "
+        >
+          {/* Glow effect */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 pointer-events-none bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-transparent blur-xl"></div>
+
+          {/* Image */}
+          <div className="h-[220px] overflow-hidden relative">
+            <img
+              src={feature.image}
+              alt={feature.title}
+              className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+          </div>
+
+          {/* Content */}
+          <div className="p-7">
+            <h3
+              className="text-[18px] text-white mb-3 leading-snug group-hover:text-blue-300 transition"
+              style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: 600 }}
+            >
+              {feature.title}
+            </h3>
+
+            <p
+              className="text-[14px] text-white/70 leading-relaxed"
+              style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: 300 }}
+            >
+              {feature.description}
             </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {[
-              {
-                title: 'ML-Based SAR Worthiness & Typology Classification',
-                description: 'Advanced machine learning algorithms classify suspicious activity and identify money laundering patterns with precision',
-                image: 'https://images.unsplash.com/photo-1717501219687-ddce079f704b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxBSSUyMG1hY2hpbmUlMjBsZWFybmluZyUyMG5ldXJhbCUyMG5ldHdvcmt8ZW58MXx8fHwxNzczODkyMjk3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral'
-              },
-              {
-                title: 'Agentic Workflow & Orchestration',
-                description: 'Intelligent multi-step processing with automated validation, enrichment, and orchestration at each stage',
-                image: 'https://images.unsplash.com/photo-1759752393975-7ca7b302fcc6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b3JrZmxvdyUyMGF1dG9tYXRpb24lMjBwcm9jZXNzfGVufDF8fHx8MTc3MzkxNTE3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral'
-              },
-              {
-                title: 'Structured SAR Narrative Generation',
-                description: 'Regulator-ready reports following FinCEN guidelines with complete audit trail and version control',
-                image: 'https://images.unsplash.com/photo-1762846700374-f4aeb2f38e92?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkb2N1bWVudCUyMHJlcG9ydCUyMHdyaXRpbmd8ZW58MXx8fHwxNzczOTE2MjcwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral'
-              },
-              {
-                title: 'Explainability & Reasoning Trace',
-                description: 'Complete transparency with line-by-line explanations, confidence indicators, and source traceability',
-                image: 'https://images.unsplash.com/photo-1740908900846-4bbd4f22c975?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkYXRhJTIwdHJhbnNwYXJlbmN5JTIwYW5hbHl0aWNzfGVufDF8fHx8MTc3MzkxNjI3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral'
-              },
-              {
-                title: 'Compliance Validation Engine',
-                description: 'Automated checks against BSA, FinCEN, and FATF regulatory requirements with real-time validation',
-                image: 'https://images.unsplash.com/photo-1704969724221-8b7361b61f75?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb21wbGlhbmNlJTIwdmFsaWRhdGlvbiUyMGNoZWNrbGlzdHxlbnwxfHx8fDE3NzM5MTYyNzF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral'
-              },
-              {
-                title: 'Full Audit Logging',
-                description: 'Complete traceability of all actions, decisions, and modifications for regulatory review and compliance',
-                image: 'https://images.unsplash.com/photo-1675627453084-505806a00406?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZWN1cml0eSUyMGRhdGFiYXNlJTIwbG9nZ2luZ3xlbnwxfHx8fDE3NzM5MTYyNzV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral'
-              }
-            ].map((feature, idx) => (
-              <div key={idx} className="bg-[#334155] rounded-xl overflow-hidden border border-[#475569] hover:border-[#64748b] transition-all group cursor-pointer">
-                <div className="h-[220px] overflow-hidden relative">
-                  <img 
-                    src={feature.image} 
-                    alt={feature.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#334155] via-transparent to-transparent"></div>
-                </div>
-                <div className="p-7">
-                  <h3 className="text-[18px] text-white mb-3 leading-snug" style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: 600 }}>
-                    {feature.title}
-                  </h3>
-                  <p className="text-[14px] text-[#cbd5e1] leading-relaxed" style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: 300 }}>
-                    {feature.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
-      </section>
+      ))}
+    </div>
+
+  </div>
+</section>
 
       {/* System Architecture Section - After Core Features */}
       <section className="py-12 sm:py-16 lg:py-24 bg-[#292b3d]">
