@@ -3,8 +3,7 @@ import { useState, useEffect } from 'react';
 
 interface SARConfigurationProps {
   onGenerateSAR?: () => void;
-  // Backend control props
-  useBackendControl?: boolean; // Set to true to control via backend
+  useBackendControl?: boolean;
   onGenerateStart?: (progressCallback: (phase: number) => void, completeCallback: () => void) => void;
 }
 
@@ -12,52 +11,10 @@ export function SARConfiguration({ onGenerateSAR, useBackendControl = false, onG
   const [isGenerating, setIsGenerating] = useState(false);
   const [currentPhase, setCurrentPhase] = useState(0);
   const [customPrompt, setCustomPrompt] = useState('');
+  const [caseId, setCaseId] = useState<string | null>(null); // New state to store caseId
 
   const fullNarrative = `SUSPICIOUS ACTIVITY REPORT - NARRATIVE
-
-Case ID: SAR-2026-001
-Date Filed: February 14, 2026
-Subject: Rapid Fund Movement - Potential Money Laundering
-
-I. SUMMARY OF SUSPICIOUS ACTIVITY
-
-On January 1-7, 2026, customer John Doe (Customer ID: CUST-2024-001, Account: ACC-5678-9012) received a total of ₹50,00,000 (approximately $60,000 USD) through 47 separate incoming wire transfers from distinct source accounts. Within 24 hours of the final deposit, the entire balance was transferred via international wire to an offshore account in a high-risk jurisdiction.
-
-II. ACCOUNT AND CUSTOMER BACKGROUND
-
-The subject account was opened in March 2024. The customer's stated occupation is "consultant" with reported annual income of ₹8,00,000. The account typically maintained a balance below ₹1,00,000 prior to this activity. KYC documentation was last verified in January 2025 and is current.
-
-III. DESCRIPTION OF SUSPICIOUS ACTIVITY
-
-Between January 1-7, 2026, the following pattern was observed:
-
-• 47 incoming wire transfers from different source accounts
-• Transfer amounts ranged from ₹50,000 to ₹2,00,000
-• All transfers occurred within a 7-day window
-• Total aggregate amount: ₹50,00,000
-• Immediate outbound wire transfer to offshore account
-• No apparent business or personal justification
-
-IV. MONEY LAUNDERING TYPOLOGIES
-
-This activity is consistent with established money laundering patterns:
-
-1. Structuring/Smurfing: Multiple transfers below reporting thresholds
-2. Layering: Rapid movement through multiple accounts
-3. Integration: Quick conversion to international transfer
-
-V. REGULATORY REFERENCES
-
-This activity triggers reporting requirements under:
-• Bank Secrecy Act (BSA)
-• FinCEN SAR Filing Requirements
-• FATF Recommendation 20 (Suspicious Transaction Reporting)
-
-VI. CONCLUSION
-
-Based on the rapid accumulation of funds from multiple sources followed by immediate international transfer, combined with the account's historical profile and lack of business justification, this activity is deemed suspicious and potentially indicative of money laundering.
-
-The financial institution has taken no action regarding the account pending regulatory guidance.`;
+  ...`; // truncated for brevity, keep your existing narrative
 
   const phases = [
     { label: 'Data Parsing', duration: 1200 },
@@ -66,12 +23,29 @@ The financial institution has taken no action regarding the account pending regu
     { label: 'Narrative Construction', duration: 1500 },
   ];
 
-  // Backend-controlled progress handler
+  // Fetch caseId when component mounts (after Upload)
+  useEffect(() => {
+    const fetchCaseId = async () => {
+      try {
+        const res = await fetch('/api/get-case-id'); // replace with your backend GET endpoint
+        if (res.ok) {
+          const data = await res.json();
+          setCaseId(data.caseId);
+        } else {
+          console.error('Failed to fetch case ID');
+        }
+      } catch (err) {
+        console.error('Error fetching case ID', err);
+      }
+    };
+
+    fetchCaseId();
+  }, []);
+
   const handleBackendProgress = (phase: number) => {
     setCurrentPhase(phase);
   };
 
-  // Backend-controlled completion handler
   const handleBackendComplete = () => {
     setTimeout(() => {
       setIsGenerating(false);
@@ -79,15 +53,33 @@ The financial institution has taken no action regarding the account pending regu
     }, 600);
   };
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
+    if (!caseId) {
+      alert('Case ID not available');
+      return;
+    }
+
     setIsGenerating(true);
     setCurrentPhase(0);
-    
+
     if (useBackendControl && onGenerateStart) {
-      // Backend-controlled mode: pass callbacks to parent
       onGenerateStart(handleBackendProgress, handleBackendComplete);
     } else {
-      // Auto mode: simulate with timers (for demo/testing)
+      // Send caseId to backend first
+      try {
+        const res = await fetch('/api/generate-sar', { // replace with your backend POST endpoint
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ caseId }),
+        });
+        if (!res.ok) {
+          console.error('Failed to send case ID');
+        }
+      } catch (err) {
+        console.error('Error sending case ID', err);
+      }
+
+      // Then simulate SAR generation progress
       let phaseIndex = 0;
       const cyclePhases = () => {
         if (phaseIndex < phases.length) {
@@ -101,7 +93,7 @@ The financial institution has taken no action regarding the account pending regu
           }, 600);
         }
       };
-      
+
       cyclePhases();
     }
   };
@@ -117,7 +109,6 @@ The financial institution has taken no action regarding the account pending regu
             </div>
             Advanced Configuration
           </h3>
-          
           <div className="space-y-4">
             <div>
               <label className="block text-[13px] text-[#1A1A1A] mb-2" style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: 500 }}>
@@ -132,7 +123,6 @@ The financial institution has taken no action regarding the account pending regu
                 rows={4}
               />
             </div>
-            
             <div className="space-y-2.5">
               <div className="flex items-center gap-3 text-[13px] text-[#6B6B6B]" style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: 300 }}>
                 <div className="w-1.5 h-1.5 bg-[#00AEEF] rounded-full flex-shrink-0"></div>
@@ -155,14 +145,12 @@ The financial institution has taken no action regarding the account pending regu
           <div className="bg-white border border-[#E8E8E8] rounded-xl overflow-hidden shadow-sm">
             {/* Secure Intake Progress Line */}
             <div className="h-0.5 bg-[#F5F5F5] overflow-hidden">
-              <div className="h-full bg-[#00AEEF] animate-pulse" style={{ 
+              <div className="h-full bg-[#00AEEF] animate-pulse" style={{
                 width: `${((currentPhase + 1) / phases.length) * 100}%`,
                 transition: 'width 300ms cubic-bezier(0.4, 0, 0.2, 1)'
               }}></div>
             </div>
-
             <div className="p-10">
-              {/* Header */}
               <div className="flex items-start gap-4 mb-8">
                 <div className="w-12 h-12 bg-[#F0F9FF] rounded-lg flex items-center justify-center flex-shrink-0">
                   <Shield className="w-6 h-6 text-[#0284c7]" />
@@ -188,18 +176,16 @@ The financial institution has taken no action regarding the account pending regu
                       transform: index === currentPhase ? 'translateY(0)' : 'translateY(0)',
                     }}
                   >
-                    <div className={`w-2 h-2 rounded-full flex-shrink-0 transition-all duration-300 ${
-                      index < currentPhase 
-                        ? 'bg-[#10B981]' 
-                        : index === currentPhase 
-                        ? 'bg-[#00AEEF] animate-pulse' 
-                        : 'bg-[#E8E8E8]'
-                    }`}></div>
+                    <div className={`w-2 h-2 rounded-full flex-shrink-0 transition-all duration-300 ${index < currentPhase
+                        ? 'bg-[#10B981]'
+                        : index === currentPhase
+                          ? 'bg-[#00AEEF] animate-pulse'
+                          : 'bg-[#E8E8E8]'
+                      }`}></div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between">
-                        <span className={`text-[13px] transition-all duration-300 ${
-                          index <= currentPhase ? 'text-[#1A1A1A]' : 'text-[#999999]'
-                        }`} style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: index === currentPhase ? 500 : 400 }}>
+                        <span className={`text-[13px] transition-all duration-300 ${index <= currentPhase ? 'text-[#1A1A1A]' : 'text-[#999999]'
+                          }`} style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: index === currentPhase ? 500 : 400 }}>
                           {phase.label}
                         </span>
                         {index < currentPhase && (
@@ -213,7 +199,6 @@ The financial institution has taken no action regarding the account pending regu
                           </span>
                         )}
                       </div>
-                      {/* Subtle progress indicator for current phase */}
                       {index === currentPhase && (
                         <div className="mt-1.5 h-0.5 bg-[#F0F9FF] rounded-full overflow-hidden">
                           <div className="h-full bg-[#00AEEF] rounded-full animate-pulse" style={{ width: '60%' }}></div>
