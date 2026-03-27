@@ -1,0 +1,159 @@
+/* ===== ROOT & RESET ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: #0a0f1e;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: #0a0f1e;
+  color: #e2e8f0;
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  background-color: #0a0f1e;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0f1e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* ===== SELECTION ===== */
+::selection {
+  background: rgba(99, 179, 237, 0.2);
+  color: #e2e8f0;
+}
+
+/* ===== TYPOGRAPHY ===== */
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+p {
+  line-height: 1.7;
+  color: #94a3b8;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ===== IMAGES ===== */
+img, video, svg {
+  max-width: 100%;
+  display: block;
+}
+
+/* ===== REACTFLOW FIX ===== */
+.react-flow__renderer,
+.react-flow__container,
+.react-flow__pane {
+  background: transparent !important;
+}
+
+.react-flow__controls {
+  background: rgba(15, 23, 42, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+}
+
+.react-flow__controls-button {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #94a3b8 !important;
+  fill: #94a3b8 !important;
+}
+
+.react-flow__controls-button:hover {
+  background: rgba(99, 179, 237, 0.1) !important;
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Large desktops */
+@media (max-width: 1280px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+/* Tablets */
+@media (max-width: 1024px) {
+  html {
+    font-size: 15px;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+}
+
+/* Mobile landscape */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+/* Mobile portrait */
+@media (max-width: 480px) {
+  html {
+    font-size: 13px;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+}
+
+/* ===== PREVENT ZOOM WHITE FLASH ===== */
+@media screen {
+  html {
+    background-attachment: fixed;
+    background-color: #0a0f1e;
+  }
+}
+
+/* ===== GLASS UTILITY ===== */
+.glass {
+  background: rgba(5, 10, 25, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+}
+
+/* ===== ANIMATED GRADIENT BORDER UTILITY ===== */
+.glow-border {
+  border: 1px solid rgba(99, 179, 237, 0.25);
+  box-shadow: 0 0 20px rgba(99, 179, 237, 0.06);
+}

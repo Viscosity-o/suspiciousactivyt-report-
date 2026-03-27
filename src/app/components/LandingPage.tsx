@@ -3,6 +3,8 @@ import { useState } from 'react';
 import barclaysBuilding from  '../../assets/a99940d037be85e8b7a7c4d577116225b365d6e0.png';
 import barclaysLogo from '../../assets/8aaed975500a30811cee81ad6dd27c38362b1e50.png';
 import MovingStarsBackground from "./MovingStars";
+import ReactFlow, { Background, Controls } from "reactflow";
+import "reactflow/dist/style.css";
 interface LandingPageProps {
   onSignIn: () => void;
   onGetStarted: () => void;
@@ -13,6 +15,109 @@ declare global {
     FinisherHeader: any;
   }
 }
+
+
+
+const mainStyle = {
+  background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
+  color: "#e2e8f0",
+  borderRadius: "12px",
+  padding: "22px 28px",
+  width: 260,
+  fontSize: 16,
+  textAlign: "center" as const,
+  border: "1px solid rgba(99,179,237,0.3)",
+  boxShadow: "0 0 18px rgba(99,179,237,0.08)",
+};
+
+const agentStyle = {
+  background: "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)",
+  color: "#cbd5e1",
+  borderRadius: "12px",
+  padding: "18px 22px",
+  width: 230,
+  fontSize: 15,
+  textAlign: "center" as const,
+  border: "1px solid rgba(148,163,184,0.2)",
+  boxShadow: "0 0 12px rgba(148,163,184,0.06)",
+};
+
+const nodes = [
+  {
+    id: "1",
+    position: { x: 0, y: 220 },
+    data: { label: (<div><b>📂 Case Intake</b><div style={{fontSize:13,opacity:.65,marginTop:5}}>Upload alerts & KYC data</div></div>) },
+    style: mainStyle
+  },
+  {
+    id: "2",
+    position: { x: 340, y: 220 },
+    data: { label: (<div><b>🧠 ML Classification</b><div style={{fontSize:13,opacity:.65,marginTop:5}}>Detect SAR worthy cases</div></div>) },
+    style: mainStyle
+  },
+  {
+    id: "3",
+    position: { x: 680, y: 220 },
+    data: { label: (<div><b>⚙ Planning Agent</b><div style={{fontSize:13,opacity:.65,marginTop:5}}>Orchestrates analysis agents</div></div>) },
+    style: mainStyle
+  },
+  {
+    id: "4",
+    position: { x: 1020, y: 40 },
+    data: { label: (<div><b>🔍 Typology Analysis</b><div style={{fontSize:13,opacity:.65,marginTop:5}}>Identify fraud patterns</div></div>) },
+    style: agentStyle
+  },
+  {
+    id: "5",
+    position: { x: 1020, y: 220 },
+    data: { label: (<div><b>🌐 Enrichment</b><div style={{fontSize:13,opacity:.65,marginTop:5}}>Pull external intelligence</div></div>) },
+    style: agentStyle
+  },
+  {
+    id: "6",
+    position: { x: 1020, y: 400 },
+    data: { label: (<div><b>🔄 Event Cognition</b><div style={{fontSize:13,opacity:.65,marginTop:5}}>Reconstruct transaction flow</div></div>) },
+    style: agentStyle
+  },
+  {
+    id: "7",
+    position: { x: 1360, y: 220 },
+    data: { label: (<div><b>✍ Narrative Generation</b><div style={{fontSize:13,opacity:.65,marginTop:5}}>Generate SAR narrative</div></div>) },
+    style: mainStyle
+  },
+  {
+    id: "8",
+    position: { x: 1700, y: 220 },
+    data: { label: (<div><b>🛡 Compliance Validation</b><div style={{fontSize:13,opacity:.65,marginTop:5}}>Check regulatory rules</div></div>) },
+    style: mainStyle
+  },
+  {
+    id: "9",
+    position: { x: 2040, y: 220 },
+    data: { label: (<div><b>👨‍💻 Human Investigator</b><div style={{fontSize:13,opacity:.65,marginTop:5}}>Manual review & approval</div></div>) },
+    style: mainStyle
+  },
+  {
+    id: "10",
+    position: { x: 2380, y: 220 },
+    data: { label: (<div><b>📄 Final SAR</b><div style={{fontSize:13,opacity:.65,marginTop:5}}>Submit compliant report</div></div>) },
+    style: mainStyle
+  }
+];
+
+const edges = [
+  { id:"e1", source:"1", target:"2", type:"smoothstep", animated:true, style:{stroke:"#63b3ed",strokeWidth:2,opacity:0.7} },
+  { id:"e2", source:"2", target:"3", type:"smoothstep", animated:true, style:{stroke:"#63b3ed",strokeWidth:2,opacity:0.7} },
+  { id:"e3", source:"3", target:"4", type:"smoothstep", animated:true, style:{stroke:"#94a3b8",strokeWidth:1.5,opacity:0.6} },
+  { id:"e4", source:"3", target:"5", type:"smoothstep", animated:true, style:{stroke:"#94a3b8",strokeWidth:1.5,opacity:0.6} },
+  { id:"e5", source:"3", target:"6", type:"smoothstep", animated:true, style:{stroke:"#94a3b8",strokeWidth:1.5,opacity:0.6} },
+  { id:"e6", source:"4", target:"7", type:"smoothstep", animated:true, style:{stroke:"#94a3b8",strokeWidth:1.5,opacity:0.6} },
+  { id:"e7", source:"5", target:"7", type:"smoothstep", animated:true, style:{stroke:"#94a3b8",strokeWidth:1.5,opacity:0.6} },
+  { id:"e8", source:"6", target:"7", type:"smoothstep", animated:true, style:{stroke:"#94a3b8",strokeWidth:1.5,opacity:0.6} },
+  { id:"e9", source:"7", target:"8", type:"smoothstep", animated:true, style:{stroke:"#63b3ed",strokeWidth:2,opacity:0.7} },
+  { id:"e10", source:"8", target:"9", type:"smoothstep", animated:true, style:{stroke:"#63b3ed",strokeWidth:2,opacity:0.7} },
+  { id:"e11", source:"9", target:"10", type:"smoothstep", animated:true, style:{stroke:"#63b3ed",strokeWidth:2,opacity:0.7} },
+];
 
 export function LandingPage({ onSignIn, onGetStarted }: LandingPageProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -36,29 +141,15 @@ export function LandingPage({ onSignIn, onGetStarted }: LandingPageProps) {
 
     {/* Logo */}
     <div className="flex items-center gap-3">
-      <div className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center bg-white/10 backdrop-blur-md">
-        <span className="text-white font-bold text-sm">N</span>
-      </div>
+      
 
-      <h1 className="text-white text-[22px] font-bold tracking-wide">
-        Norn AI
-      </h1>
+     <h1 style={{ fontFamily: "'Josefin Sans', sans-serif", fontWeight: 700, fontSize: "22px", color: "white", letterSpacing: "0.12em" }}>
+  NORN AI
+</h1>
     </div>
 
     {/* Right */}
-    <div className="flex items-center gap-4">
-      <button className="px-6 h-[40px] rounded-full border border-white/20 
-        bg-white/10 backdrop-blur-md hover:bg-white/20 transition text-[14px] font-medium text-white">
-        Contact
-      </button>
-
-      <button className="w-[40px] h-[40px] flex items-center justify-center 
-        border border-white/20 rounded-full bg-white/10 backdrop-blur-md 
-        hover:bg-white/20 transition">
-        <Search className="w-5 h-5 text-white" />
-      </button>
-    </div>
-
+    
   </nav>
 
 
@@ -224,54 +315,71 @@ export function LandingPage({ onSignIn, onGetStarted }: LandingPageProps) {
   </div>
 </section>
 
-      {/* System Architecture Section - After Core Features */}
-      <section className="py-12 sm:py-16 lg:py-24 bg-[#292b3d]">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
-          <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-[28px] sm:text-[36px] lg:text-[42px] text-white mb-3 sm:mb-4" style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: 600 }}>
-              System Architecture
-            </h2>
-            <p className="text-[15px] sm:text-[16px] lg:text-[18px] text-[#B0B0B0] max-w-[800px] mx-auto px-4" style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: 300 }}>
-              Clean diagram-style layout showing data flow through enterprise infrastructure
-            </p>
-          </div>
+     
+{/* System Architecture Section - After Core Features */}
+<section className="relative py-28 overflow-hidden text-white">
 
-          {/* Flow Diagram */}
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 sm:p-6 lg:p-10 mb-8 sm:mb-12 overflow-x-auto">
-            <div className="flex items-center justify-center gap-2 sm:gap-4 min-w-max">
-              {['Input', 'Processing', 'LLM', 'Validation', 'Output'].map((step, idx) => (
-                <div key={idx} className="flex items-center gap-2 sm:gap-4">
-                  <div className="bg-gradient-to-br from-[#00AEEF] to-[#0284c7] text-white rounded-xl px-6 sm:px-10 py-4 sm:py-7 text-center min-w-[120px] sm:min-w-[160px] shadow-lg">
-                    <div className="text-[14px] sm:text-[16px]" style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: 600 }}>
-                      {step}
-                    </div>
-                  </div>
-                  {idx < 4 && <ArrowRight className="w-5 h-5 sm:w-7 sm:h-7 text-[#00AEEF] flex-shrink-0" />}
-                </div>
-              ))}
-            </div>
-          </div>
+  <MovingStarsBackground />
 
-          {/* Technology Labels */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            {[
-              { label: 'AWS Lambda', desc: 'Serverless processing' },
-              { label: 'S3', desc: 'Secure data storage' },
-              { label: 'Bedrock', desc: 'LLM integration' },
-              { label: 'RDS', desc: 'PostgreSQL database' }
-            ].map((tech, idx) => (
-              <div key={idx} className="bg-white/5 border border-white/10 rounded-xl p-6 text-center hover:bg-white/10 transition-all">
-                <div className="text-[17px] text-white mb-2" style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: 600 }}>
-                  {tech.label}
-                </div>
-                <div className="text-[13px] text-[#B0B0B0]" style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: 300 }}>
-                  {tech.desc}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+  <div className="absolute inset-0 bg-black/40 z-[1]" />
+
+  <div className="relative z-[2] max-w-[1800px] mx-auto px-8">
+
+    {/* Heading */}
+    <div className="text-center mb-20">
+      <h2 className="text-[42px] font-semibold tracking-tight text-white">
+        Agentic Workflow
+      </h2>
+
+      <p className="text-[#B0B0B0] max-w-[720px] mx-auto mt-4 text-[16px]">
+        End-to-end AI pipeline converting transaction alerts into regulator-ready
+        Suspicious Activity Reports through coordinated intelligent agents.
+      </p>
+    </div>
+
+    {/* Workflow Canvas */}
+    <>
+      <style>{`
+        .react-flow__renderer,
+        .react-flow__container,
+        .react-flow__pane {
+          background: transparent !important;
+        }
+      `}</style>
+
+      <div
+        className="w-full h-[400px] rounded-2xl border border-white/10 backdrop-blur-sm overflow-hidden"
+        style={{ background: "rgba(5, 10, 25, 0.15)" }}
+      >
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          fitView
+          fitViewOptions={{ padding: 0.18 }}
+          panOnDrag
+          zoomOnScroll
+          minZoom={0.3}
+          maxZoom={1.5}
+        >
+          <Background
+            gap={32}
+            size={1}
+            color="#0d1117"
+          />
+          <Controls
+            style={{
+              background: "rgba(15,23,42,0.8)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              borderRadius: "8px",
+            }}
+          />
+        </ReactFlow>
+      </div>
+    </>
+
+  </div>
+
+</section>
 
       {/* Explainability Section - Full Width Image */}
       <section className="py-12 sm:py-16 lg:py-24 bg-[#FFE5E5]">
@@ -381,50 +489,6 @@ export function LandingPage({ onSignIn, onGetStarted }: LandingPageProps) {
         </div>
       </section>
 
-      {/* Security & Compliance Section */}
-      <section className="py-12 sm:py-16 lg:py-24 bg-[#292b3d]">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
-            <div className="rounded-xl overflow-hidden shadow-2xl order-2 md:order-1">
-              <img 
-                src="https://images.unsplash.com/photo-1768839720841-8219c4da7436?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaW5hbmNpYWwlMjBzZWN1cml0eSUyMGVuY3J5cHRpb24lMjB0ZWNobm9sb2d5fGVufDF8fHx8MTc3MzkxNTk0Nnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" 
-                alt="Financial security technology"
-                className="w-full h-[300px] sm:h-[400px] md:h-[500px] object-cover"
-              />
-            </div>
-            <div className="order-1 md:order-2">
-              <h2 className="text-[28px] sm:text-[36px] lg:text-[42px] text-white mb-4 sm:mb-6" style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: 600 }}>
-                Enterprise Security & Compliance
-              </h2>
-              <p className="text-[14px] sm:text-[15px] lg:text-[16px] text-[#B0B0B0] mb-6 sm:mb-8 lg:mb-10 leading-relaxed" style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: 300 }}>
-                Built with bank-grade security controls and compliance frameworks trusted by global financial institutions.
-              </p>
-              <div className="space-y-3 sm:space-y-4">
-                {[
-                  { icon: <Lock className="w-5 h-5" />, title: 'Data Encryption (KMS)', desc: 'End-to-end encryption at rest and in transit' },
-                  { icon: <Shield className="w-5 h-5" />, title: 'Role-Based Access Control', desc: 'Granular IAM policies and permission management' },
-                  { icon: <CheckCircle className="w-5 h-5" />, title: 'Audit Logging', desc: 'Complete activity logs for regulatory review' },
-                  { icon: <Database className="w-5 h-5" />, title: 'CloudWatch Monitoring', desc: 'Real-time system health and alerting' }
-                ].map((item, idx) => (
-                  <div key={idx} className="flex gap-4 bg-[#334155] rounded-lg p-5 border border-[#475569]">
-                    <div className="w-10 h-10 bg-[#00AEEF] rounded-lg flex items-center justify-center text-white flex-shrink-0">
-                      {item.icon}
-                    </div>
-                    <div>
-                      <h4 className="text-[15px] text-white mb-1" style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: 600 }}>
-                        {item.title}
-                      </h4>
-                      <p className="text-[13px] text-[#cbd5e1]" style={{ fontFamily: "'Libre Franklin', sans-serif", fontWeight: 300 }}>
-                        {item.desc}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* CTA Section */}
       <section className="py-16 sm:py-20 lg:py-28 bg-[#292b3d] relative overflow-hidden">

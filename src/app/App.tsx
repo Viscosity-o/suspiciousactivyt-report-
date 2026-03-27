@@ -167,16 +167,16 @@ export default function App() {
       `}>
         {/* Logo Area */}
         <div className="h-[72px] flex items-center justify-between px-6 border-b border-[#E8E8E8]">
-          <div className="flex items-center gap-2">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#003366"/>
-              <path d="M2 17L12 22L22 17" stroke="#003366" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M2 12L12 17L22 12" stroke="#003366" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            <span className="text-[15px] text-[#1A1A1A]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400 }}>
-              <span style={{ fontWeight: 600 }}>barclays</span>sar
-            </span>
-          </div>
+         <div className="flex items-center gap-2">
+  <span style={{ 
+    fontFamily: "'Josefin Sans', sans-serif", 
+    fontWeight: 700,
+    fontSize: "22px",
+    marginLeft: "8px"
+  }}>
+         NornAi
+  </span>
+</div>
           
           {/* Mobile Close Button */}
           <button
